@@ -33,4 +33,4 @@ new Vue({
   render: h => h(app)
 }).$mount('#app');
 
-router.push('./onelist');
+router.push('./alllist');

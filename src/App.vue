@@ -65,9 +65,10 @@
     margin-top 30px
     margin-left 30px
     margin-right 30px
-    background-color #FFFFFF
+    background-color #efefef
     border 1px solid #ddd
     box-shadow: 0px 1px 3px 0px #ddd;
     border-top 5px solid #ddd
+    position relative
     overflow hidden
 </style>
