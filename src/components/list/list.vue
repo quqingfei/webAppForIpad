@@ -40,6 +40,7 @@
     margin-bottom 5px
     .ime
       padding-left 50px
+      color #666
     .cen
       text-align center 
     span

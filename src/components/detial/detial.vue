@@ -68,11 +68,100 @@
     <div class="titlelist">
       基本身体成分 <span class="blue">偏低</span>
     </div>
-    <div class="bodylist">
+    <div class="bodylist bg">
       <div class="heart">
-        <div>
-          <span><img src=""></span>
-        </div>
+        <span class="text xinglv">静态心率</span><span class="num">66</span>
+      </div>
+      <div class="font">
+        静态心率又称为安静心率，是指在清醒、不活动的安静静态状下，每分钟心跳次数
+      </div>
+      <div class="chartline">
+        <v-line>
+          <div slot="title">评估建议：</div>
+          <div slot="text">静态心率又称为安静心率，是指在清醒、不活动的安静静态状下，每分钟心跳次数</div>
+        </v-line>
+      </div>
+    </div>
+    <div class="titlelist">
+      运动安全血压 <span class="yellow">偏高</span>
+    </div>
+    <div class="bodylist bg">
+      <div class="heart">
+        <span class="text shousuo">收缩压</span><span class="num">114</span>
+      </div>
+      <div class="font">
+        收缩压就是当心脏收缩时，动脉内的压力最高，此时内壁的压力称为收缩压，收缩压≤120mmHg称为理想血压＜90mmHg(12kpa)
+      </div>
+      <div class="chartline">
+        <v-line></v-line>
+      </div>
+    </div>
+    <div class="bodylist bg">
+      <div class="heart">
+        <span class="text shuzhang">舒张压</span><span class="num">70</span>
+      </div>
+      <div class="font">
+        舒张压就是当心脏舒张时，动脉血管弹性回缩时，产生的压力称为舒张压，又叫低压。成人正常的舒张压＜90mmHg(12kpa)
+      </div>
+      <div class="chartline">
+        <v-line>
+          <div slot="zhanwei"><br><br><br></div>
+          <div slot="title">评估建议：</div>
+          <div slot="text">舒张压就是当心脏舒张时，动脉血管弹性回缩时，产生的压力称为舒张压，又叫低压。成人正常的舒张压＜90mmHg(12kpa)</div>
+        </v-line>
+      </div>
+    </div>
+    <div class="titlelist">
+      体重控制
+    </div>
+    <div class="wcontrcl">
+      <div class="itemw">
+        <div class="value">65.8kg</div>
+        <div class="key">理想体重</div>
+      </div>
+      <div class="itemw">
+        <div class="value">65.8kg</div>
+        <div class="key">体重控制</div>
+      </div>
+      <div class="itemw">
+        <div class="value">65.8kg</div>
+        <div class="key">脂肪控制</div>
+      </div>
+      <div class="itemw">
+        <div class="value">65.8kg</div>
+        <div class="key">肌肉控制</div>
+      </div>      
+    </div>
+    <div class="titlelist">
+      体重控制
+    </div>
+    <div class="iid">
+      <div class="square fat1">
+          <div class="content">合理礼物收到</div>
+      </div>
+      <div class="square center fat2">
+          <div class="content">合理礼物收到</div>
+      </div>
+      <div class="square fat3">
+          <div class="content">合理礼物收到</div>
+      </div>
+      <div class="square fat4">
+          <div class="content">合理礼物收到</div>
+      </div>
+      <div class="square center fat5">
+          <div class="content">合理礼物收到</div>
+      </div>
+      <div class="square fat6">
+          <div class="content">合理礼物收到</div>
+      </div>
+      <div class="square fat7">
+          <div class="content">合理礼物收到</div>
+      </div>
+      <div class="square center fat8">
+          <div class="content">合理礼物收到</div>
+      </div>
+      <div class="square fat9">
+          <div class="content">合理礼物收到</div>
       </div>
     </div>
   </div>
@@ -82,6 +171,7 @@
 
 <script>
   import vList from '@/components/list/list';
+  import vLine from '@/components/line/line';
   export default {
     data() {
       return {
@@ -104,7 +194,8 @@
       }
     },
     components: {
-      vList
+      vList,
+      vLine
     }
   };
 </script>
@@ -148,6 +239,7 @@
       max-height 200px
       overflow auto
       width 188px
+      z-index 100
       transition all 0.2s
       &.fade-leave, &.fade-enter-active
         opacity 1
@@ -270,5 +362,109 @@
       color #ffbd24  
       margin-left 4px   
   .bodylist
+    margin 0 10px  
+  .bg
+    background-color white  
+    .heart
+      padding 6px
+      height 30px
+      line-height 30px
+      .text
+        display inline-block
+        height 100%
+        padding-left 49px
+        font-size 15px
+        color #666
+        &.xinglv
+          background url('./kicon.png') 10px center no-repeat
+          background-size 30px 30px
+        &.shousuo
+          background url('./micon.png') 10px center no-repeat
+          background-size 30px 30px
+        &.shuzhang
+          background url('./nicon.png') 10px center no-repeat
+          background-size 30px 30px  
+      .num
+        font-size 15px
+        color #333
+        font-weight bold
+        margin-left 20px
+    .font
+      font-size 12px
+      color #333
+      margin 23px 18px 0 18px
+    .chartline
+      margin 67px 10px 0 10px
+  .wcontrcl
+    background-color white
+    display flex
+    height 105px
+    text-align center
+    font-size 14px
     margin 0 10px
+    .itemw
+      flex 1
+      .value
+        border 1px solid #49badc
+        color #49badc
+        width 73px
+        height 22px
+        margin 30px auto 8px auto
+        line-height 22px
+        border-radius 2px
+      .key
+        color #333
+  .iid
+    font-size 0
+    position relative
+    overflow hidden
+    margin 0 10px
+    .square
+      display inline-block
+      position relative
+      width 32.3%
+      background #fff
+      margin-bottom 7px
+      &.center
+        margin-right 7px
+        margin-left 7px
+      &.fat1
+        background #fff url('./yxfat_03.png') center 30% no-repeat
+        background-size 44%
+      &.fat2
+        background #fff url('./sf_03.png') center 30% no-repeat
+        background-size 44%
+      &.fat3
+        background #fff url('./f_03.png') center 30% no-repeat
+        background-size 44%
+      &.fat4
+        background #fff url('./solean_03.png') center 30% no-repeat
+        background-size 44%
+      &.fat5
+        background #fff url('./lean_03.png') center 30% no-repeat
+        background-size 44%
+      &.fat6
+        background #fff url('./mm_03.png') center 30% no-repeat
+        background-size 44%
+      &.fat7
+        background #fff url('./b_03.png') center 30% no-repeat
+        background-size 44%
+      &.fat8
+        background #fff url('./bm_03.png') center 30% no-repeat
+        background-size 44%
+      &.fat9
+        background #fff url('./sportdie_03.png') center 30% no-repeat
+        background-size 44%                
+      &:after
+        content ""
+        display block
+        padding-bottom: 100%
+      .content
+        position absolute
+        color #333
+        font-size 16px
+        width 100%
+        text-align center
+        bottom 6%
+        color #999
 </style>
