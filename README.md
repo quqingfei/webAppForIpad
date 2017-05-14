@@ -1,4 +1,4 @@
-# sell
+#webapp for ipad
 
 > a webpack2 and vue2 + vue-router2 + stylus it use vue-cli to webpack build
 
@@ -18,4 +18,3 @@ npm run build
 npm run build --report
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
