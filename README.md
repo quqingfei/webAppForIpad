@@ -1,4 +1,4 @@
-#webapp for ipad
+# webapp for ipad
 
 > a webpack2 and vue2 + vue-router2 + stylus it use vue-cli to webpack build
 
@@ -17,4 +17,5 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
+## Complete
+![Alt text](/static/img/complete.gif)
