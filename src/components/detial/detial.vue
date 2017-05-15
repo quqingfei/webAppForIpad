@@ -1,9 +1,32 @@
 <template>
-<div>
+<div style="position:relative">
+  <transition name="fade">
+  <div class="detial" :class="dldl">
+      <div class="detail-wrapper clearfix">
+          <div class="detail-main">
+             <div class="tctcenter">体质评级等级说明</div>
+                  <div class="ctexplan" style="color: #d0cfd1;">体质评级是根据人体的BMI、水分、心率、肺活量等各项身体数据进行的评级，由低到高，共分为心肺减脂、增肌塑形、功能进阶、专业巩固四个等级。</div>
+                  <div class="ctelev">
+                      <div class="letit speap">体测评级分级</div>
+                      <div class="speap deepvlue">LV.1 心肺减脂阶段 </div>
+                      <div class="speap deepvlue">LV.2 增肌塑形阶段 </div>
+                      <div class="speap deepvlue">LV.3 功能进阶阶段 </div>
+                      <div class="speap deepvlue">LV.4 专业巩固阶段 </div>
+                  </div>
+                  <div class="ctexplan">当通过LV.1心肺减脂及LV.2增肌塑形两个训练阶段后，您才可以具备进行高级阶段的晋级。同时会根据您的数据评估，为您推荐2个高级训练阶段进行选择，选择LV.3或LV.4，作为身体发展的方向。</div>
+
+          <div class="ctexplan">LV.3 功能性进阶：发展身体综合素质，包括（爆发、平衡、协调、灵敏、反应、速度）配合相应运动技术从而提高运动表现。例：篮球运动及羽毛球运动等需要具备的是人体综合素质而非肌肉力量与体积。</div>
+
+          <div class="ctexplan">LV.4 专业巩固阶段：发展身体的心肺功能及肌肉力量与耐力、柔韧性，并控制身体成分、将人体的肌肉通过艺术的形式展现出来。例：传统健美、古典健美、女子健身小姐、女子比基尼健身等。</div>
+          </div>
+      </div>
+      <div class="detail-close" @click="shwoExplan(explanShow)"><img src="./close.png" class="tcclose"></div>
+  </div>
+  </transition>
   <div class="title">
     <span class="text">体测时间：</span>
     <span class="icondate">
-        <span  @click="shwoDetial(detailShow)">2017-05-03 10:30:07</span>
+        <span @click="shwoDetial(detailShow)">2017-05-03 10:30:07</span>
         <i :class="rotere" @click="shwoDetial(detailShow)"></i>
         <transition name="fade">
           <ul v-show="detailShow">
@@ -27,12 +50,12 @@
             <g stroke="red" stroke-width="1" fill="none" fill-rule="evenodd"><path id="tablet-circle" data-length="1327" stroke="#49badc" stroke-linecap="round" 
             stroke-dasharray="1327" stroke-dashoffset="500" stroke-width="30" d="M212.2,1.8 C268.528634,1.8 321.511013,23.7365639 361.480176,63.5198238 C401.263436,103.303084 423.2,156.285463 423.2,212.8 C423.2,269.128634 401.263436,322.111013 361.480176,362.080176 C321.696916,401.863436 268.714537,423.8 212.2,423.8 C155.685463,423.8 102.888987,401.863436 62.9198238,362.080176 C23.1365639,322.296916 1.2,269.314537 1.2,212.8 C1.2,156.471366 23.1365639,103.488987 62.9198238,63.5198238 C102.888987,23.7365639 155.871366,1.8 212.2,1.8"></path></g>
             </svg>
-            <div class="headicon"><img src="./head.jpg" height="500" width="500"></div>
+            <div class="headicon"><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="500" width="500"></div>
         </div>
         <div class="headdetial">
           <div class="source">
             <span class="text">综合评分：<font class="bule">100分</font></span>
-            <span class="righttext">体质评级：LV.1 <i></i></span>
+            <span class="righttext">体质评级：LV.1 <i @click="shwoExplan(explanShow)"></i></span>
           </div>
           <div class="twod">
             <span class="text">基本身体成分</span>
@@ -137,31 +160,82 @@
     </div>
     <div class="iid">
       <div class="square fat1">
-          <div class="content">合理礼物收到</div>
+          <div class="content">隐形肥胖型</div>
       </div>
       <div class="square center fat2">
-          <div class="content">合理礼物收到</div>
+          <div class="content">偏胖型</div>
       </div>
       <div class="square fat3">
-          <div class="content">合理礼物收到</div>
+          <div class="content">肥胖型</div>
       </div>
       <div class="square fat4">
-          <div class="content">合理礼物收到</div>
+          <div class="content">偏瘦肌肉型</div>
       </div>
       <div class="square center fat5">
-          <div class="content">合理礼物收到</div>
+          <div class="content">标准型</div>
       </div>
       <div class="square fat6">
-          <div class="content">合理礼物收到</div>
+          <div class="content">非常肌肉型</div>
       </div>
       <div class="square fat7">
-          <div class="content">合理礼物收到</div>
+          <div class="content">偏瘦型</div>
       </div>
       <div class="square center fat8">
-          <div class="content">合理礼物收到</div>
+          <div class="content">标准肌肉型</div>
       </div>
       <div class="square fat9">
-          <div class="content">合理礼物收到</div>
+          <div class="content">运动不足型</div>
+      </div>
+    </div>
+    <div class="titlelist">
+      近7次体测数据
+    </div>
+    <div class="chartline">
+      <div class="linetitle">
+          <div class="lineitem">
+            <div class="item item0">体重</div>
+          </div>
+          <div class="lineitem">
+            <div class="item item1">心率</div>
+          </div>
+          <div class="lineitem">
+            <div class="item item2">血压</div>
+          </div>
+          <div class="lineitem">
+            <div class="item item3">肌肉占比</div>
+          </div>
+      </div>
+      <div class="chart">
+        line-chart
+      </div> 
+    </div>
+    <div class="titlelist">
+      近期体测照片：
+    </div>
+    <div class="picturebox">
+      <div class="pictured">            
+        <div class="seee">
+          <table>
+            <tbody>
+              <tr>
+                <td onclick="indes($(this))"><i class="">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bighead">
+        <img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg">
       </div>
     </div>
   </div>
@@ -176,7 +250,9 @@
     data() {
       return {
         detailShow: false,
+        explanShow: false,
         rotere: null,
+        dldl: null,
         item: {
           type: Object
         }
@@ -191,6 +267,16 @@
           this.detailShow = true;
           this.rotere = `rotere`;
         };
+      },
+      shwoExplan(data) {
+        if(data) {
+          this.explanShow = false;
+          this.dldl = null;
+        }else{
+          this.explanShow = true;
+          this.dldl = `shiw`;
+        };
+        console.log(this.explanShow);
       }
     },
     components: {
@@ -362,7 +448,7 @@
       color #ffbd24  
       margin-left 4px   
   .bodylist
-    margin 0 10px  
+    margin 0 10px
   .bg
     background-color white  
     .heart
@@ -467,4 +553,144 @@
         text-align center
         bottom 6%
         color #999
+  .chartline
+    margin 0 10px
+    background-color white
+    color #999
+    font-size 14px
+    .linetitle
+      overflow hidden
+      width 100%
+      padding-top 22px
+      padding-bottom 22px
+      .lineitem
+        float left
+        width 25%
+        .item
+          width 75px
+          height 26px
+          background-color #efefef
+          text-align center
+          line-height 26px
+          margin 0 auto
+          border-radius 2px
+          &.item0
+            color white
+            background-color #ffbc3a
+          &.item1
+            color white
+            background-color #17e277
+          &.item2
+            color white
+            background-color #17dee1
+          &.item3
+            color white
+            background-color #e23d17
+    .chart
+      height 270px
+      text-align center
+      line-height 270px
+      color #666
+      font-size 40px
+  .picturebox 
+    margin 0 10px
+    background-color white
+    padding 8px
+    .pictured
+      .seee
+        overflow-y hidden
+        width 100%
+        margin-bottom 6px  
+        td
+          position relative
+          margin-right 6px
+          i
+            position absolute
+            width 74px
+            height 74px
+            background rgba(0,0,0,0.6)
+            text-align center
+            line-height 124px
+            font-size 16px
+            color #ccc
+            top 0px
+            font-style normal
+            transition all 0.2s
+            &.cilic
+              line-height 24px
+              top 50px
+          img
+            width 74px
+            height 74px
+            display block
+            margin-right 6px
+  .bighead
+    width 100%
+    img
+      width 100%          
+.detial
+  position absolute
+  width 100%
+  z-index 101
+  top 0
+  left 0
+  height 100%
+  overflow auto
+  display none
+  background-color rgba(7,17,27,0.8)
+  .detail-wrapper
+    min-height 100%
+    .detail-main
+      padding-bottom 64px
+      color white
+      .tctcenter
+        text-align center
+        color #ffbd3b
+        font-size 18px
+        padding-top 12px
+      .ctexplan
+        margin 15px 16px 10px 16px
+        font-size 14px
+        text-align Justify
+      .ctelev
+        margin 0 16px
+        padding 6px 10px
+        border 1px dashed #30302f
+        border-radius 15px
+        .speap
+          margin 4px 0
+        .letit 
+          color #858786
+          font-size 14px
+        .deepvlue
+          color #4d6784
+          font-size 14px 
+  .detail-close
+    position relative
+    width 32px
+    height 32px
+    margin -64px auto 0 auto
+    clear both
+    text-align center
+    color white
+    .tcclose
+      height 50px
+      width 50px
+      border-radius 50%
+      background rgba(255,255,255,0.1)
+      position absolute
+      bottom 10px
+      left 50%
+      margin-left -25px
+  .clearfix
+    display inline-block
+    &:after
+      display block
+      content "."
+      height 0
+      line-height 0
+      clear both
+      visibility hidden 
+.shiw
+  display block    
 </style>

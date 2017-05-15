@@ -7,20 +7,7 @@
   <div class="alllist">
     <ul>
       <li class="list-item active">
-        <div class="header-img"><img src="./head.jpg" height="500" width="500"></div>
-        <div class="list-detial">
-          <div class="list_detial_left">
-            <div class="list_detial_left_top">昵称：Libra串串</div>
-            <div class="list_detial_left_bot">电话：134****7807</div>
-          </div>
-          <div class="list_detial_right">
-            <div class="list_detial_right_top"><span>姓名：泥巴串串</span><img src="./man.png" alt="" /></div>
-            <div class="list_detial_right_bot">2017-05-03 10:30:07</div>
-          </div>
-        </div>
-      </li>
-      <li class="list-item">
-        <div class="header-img"><img src="./head.jpg" height="500" width="500"></div>
+        <div class="header-img"><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="500" width="500"></div>
         <div class="list-detial">
           <div class="list_detial_left">
             <div class="list_detial_left_top">昵称：Libra串串</div>
