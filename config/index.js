@@ -23,11 +23,19 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8089,
+    port: 8080,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+        '/fatburn/': {
+            target: 'http://192.168.0.250:8080',
+            pathRewrite: {
+              '^/fatburn': '/fatburn'
+            },
+            changeOrigin: true
+        }
+    },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

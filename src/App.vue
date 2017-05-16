@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import { Event } from './pub.js';
   import vHeader from './components/header/header';
   import vDetial from './components/detial/detial';
   export default {
@@ -28,6 +29,18 @@
       };
     },
     created() {
+      Event.$on('my-event', text => {
+        alert(text);
+      });
+      this.$http.post('/fatburn/gym/loginAction!login.zk',
+          { user_id: 'admin', user_pwd: 123465 }).then(response => {
+          if(response.body.STATUS){
+            console.log(response.body.INFO);
+          };
+        }, response => {
+      });
+    },
+    methods: {
     },
     components: {
       vHeader,

@@ -39,6 +39,7 @@ export default{};
       padding-left 8px
       width 242px
       background-color #3c3c3c
+      color white
       border-radius 4px
       outline none
       font-size 14px

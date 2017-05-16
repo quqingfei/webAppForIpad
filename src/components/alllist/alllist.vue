@@ -6,16 +6,16 @@
   </div>
   <div class="alllist">
     <ul>
-      <li class="list-item active">
+      <li class="list-item active" v-for="item in list" @click="emitMyEvent">
         <div class="header-img"><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="500" width="500"></div>
         <div class="list-detial">
           <div class="list_detial_left">
-            <div class="list_detial_left_top">昵称：Libra串串</div>
-            <div class="list_detial_left_bot">电话：134****7807</div>
+            <div class="list_detial_left_top">昵称：{{item.nick}}</div>
+            <div class="list_detial_left_bot">电话：{{item.phone}}</div>
           </div>
           <div class="list_detial_right">
-            <div class="list_detial_right_top"><span>姓名：泥巴串串</span><img src="./man.png" alt="" /></div>
-            <div class="list_detial_right_bot">2017-05-03 10:30:07</div>
+            <div class="list_detial_right_top"><span>姓名：{{item.name}}</span><img src="./man.png" alt="" /></div>
+            <div class="list_detial_right_bot">{{item.time}}</div>
           </div>
         </div>
       </li>
@@ -23,10 +23,28 @@
   </div>
 </div>
 
-
 </template>
 
-<script type="text/ecmascript-6">
+<script>
+import { Event } from '@/pub.js';
+export default {
+  data() {
+    return {
+      list: [{
+        name: `串串`,
+        phone: `1309981259`,
+        nick: `滴答滴`,
+        time: `2017-02-15 20:30:08`
+      }],
+      hello: 123
+    };
+  },
+  methods: {
+    emitMyEvent() {
+      Event.$emit('my-event', this.hello);
+    }
+  }
+};
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
