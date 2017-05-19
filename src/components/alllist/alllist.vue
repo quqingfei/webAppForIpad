@@ -2,23 +2,24 @@
 <div>
   <div class="title">
     <span class="text">体测列表</span>
-    <span class="iconupdate"><img src="./update.png" height="16" width="16"></span>
+    <span class="iconupdate" @click="updateAllList"><img src="./update.png" height="16" width="16"></span>
   </div>
-  <div class="alllist">
+  <div class="alllist" v-scroll="onScroll">
     <ul>
-      <li class="list-item active" v-for="item in list" @click="emitMyEvent">
-        <div class="header-img"><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="500" width="500"></div>
+      <li class="list-item" :class="{'active':item.active,'unactive':!item.active}" v-for="(item, $index) in list" @click="emitMyEvent(item, $index)">
+        <div class="header-img"><img :src="imgt+item.headIcon+'&style=52h_52w_0e'" height="500" width="500"></div>
         <div class="list-detial">
           <div class="list_detial_left">
-            <div class="list_detial_left_top">昵称：{{item.nick}}</div>
+            <div class="list_detial_left_top">昵称：{{item.nickName}}</div>
             <div class="list_detial_left_bot">电话：{{item.phone}}</div>
           </div>
           <div class="list_detial_right">
-            <div class="list_detial_right_top"><span>姓名：{{item.name}}</span><img src="./man.png" alt="" /></div>
-            <div class="list_detial_right_bot">{{item.time}}</div>
+            <div class="list_detial_right_top"><span>姓名：{{item.realName}}</span><img src="./man.png" alt="" /></div>
+            <div class="list_detial_right_bot">{{item.bodyExamTime | times}}</div>
           </div>
         </div>
       </li>
+      <li class="nomessage">没有数据了</li>
     </ul>
   </div>
 </div>
@@ -30,18 +31,72 @@ import { Event } from '@/pub.js';
 export default {
   data() {
     return {
-      list: [{
-        name: `串串`,
-        phone: `1309981259`,
-        nick: `滴答滴`,
-        time: `2017-02-15 20:30:08`
-      }],
-      hello: 123
+      imgt: '/fatburn/file/FileCenter!showImage2.zk?name=',
+      list: [],
+      boxHeight: null,
+      staticAllist: null,
+      i: 1,
+      once: true
     };
   },
+  created() {
+    this.addAllList();
+  },
+  mounted() {
+    this.staticAllist = this.$el.getElementsByClassName('alllist')[0].clientHeight;
+  },
+  updated() {
+    if(this.once){
+      this.$el.getElementsByClassName('list-item')[0].click();
+      this.once = false;
+    }
+  },
   methods: {
-    emitMyEvent() {
-      Event.$emit('my-event', this.hello);
+    emitMyEvent(item, index) {
+      Event.$emit('my-event', item.userId);
+      this.$store.commit(`setUserId`, item.userId);
+      this.$nextTick(function() {
+        this.list.forEach(el => {
+          el.active = false;
+        });
+        this.$set(item, 'active', true);
+      });
+    },
+    onScroll: function(item, position) {
+      this.$nextTick(function() {
+        this.boxHeight = this.$el.getElementsByTagName('ul')[0].clientHeight;
+        if (this.staticAllist >= (this.boxHeight - position.scrollTop)) {
+          this.i++;
+          this.addAllList();
+        };
+      });
+    },
+    updateAllList() {
+      this.i = 1;
+      this.list = [];
+      this.addAllList();
+    },
+    addAllList() {
+      this.$ajax.get('/fatburn/ngym/GymMembersAction!listCustomer.zk', {
+        params: {
+          requstType: 'examTime',
+          page: this.i,
+          rows: 30,
+          type: 'effect'
+        }
+      })
+      .then(function (response) {
+        if(response.data.rows.length <= 0){
+          this.$el.getElementsByClassName('nomessage')[0].style.display = `block`;
+        };
+        for(let i = 0; i < response.data.rows.length; i++){
+          this.$set(response.data.rows[i], 'active', false);
+          this.list.push(response.data.rows[i]);
+        };
+      }.bind(this))
+      .catch(function (error) {
+        console.log(error);
+      });
     }
   }
 };
@@ -81,14 +136,21 @@ export default {
       display block
 .alllist
   font-size 12px
-  height 79vh
+  height calc(100vh - 64px - 30px - 14px - 46px)
   overflow auto
+  .nomessage
+    display none
+    line-height 40px
+    text-align center
+    color #999
   .list-item
     border-bottom 1px solid #ddd
     display flex
     color #666666
     &.active
-      background-color #c2e4ee
+      background-color #c2e4ee !important
+    &.unactive
+      background-color #ffffff !important  
     &:nth-child(2n)
       background-color: #F9F9F9
     .header-img

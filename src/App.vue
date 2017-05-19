@@ -1,12 +1,14 @@
 <template>
   <div>
-    <v-header :seller="seller"></v-header>
+    <v-header></v-header>
     <div class="bodydetial">
       <div class="bodydetialleft">
-        <router-view></router-view>
+        <transition name="slide-fade">
+          <router-view></router-view>
+        </transition>
       </div>
       <div class="bodydetialright">
-        <v-detial :person="person"></v-detial>
+        <v-detial></v-detial>
       </div>    
     </div>
     
@@ -18,26 +20,9 @@
   import vHeader from './components/header/header';
   import vDetial from './components/detial/detial';
   export default {
-    data() {
-      return {
-        seller: {
-          type: Object
-        },
-        person: {
-          type: Object
-        }
-      };
-    },
     created() {
       Event.$on('my-event', text => {
-        alert(text);
-      });
-      this.$http.post('/fatburn/gym/loginAction!login.zk',
-          { user_id: 'admin', user_pwd: 123465 }).then(response => {
-          if(response.body.STATUS){
-            console.log(response.body.INFO);
-          };
-        }, response => {
+        this.userId = text;
       });
     },
     methods: {
@@ -72,6 +57,13 @@
     border-top 5px solid #ddd
     position relative
     overflow hidden
+    .slide-fade-enter-active
+      transition all .3s ease
+    .slide-fade-leave-active
+      transition all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+    .slide-fade-enter, .slide-fade-leave-to
+      transform translateX(-10px)
+      opacity 0
   .bodydetialright
     box-sizing border-box
     flex 1

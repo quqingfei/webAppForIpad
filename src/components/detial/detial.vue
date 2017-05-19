@@ -258,6 +258,22 @@
         }
       };
     },
+    computed: {
+      userId() {
+        return this.$store.state.userId;
+      }
+    },
+    watch: {
+      userId: function(val, oldVal){
+        console.log('new: %s, old: %s', val, oldVal);
+        this.$ajax.get('/fatburn/ngym/GymBodyExamAction!list.zk!list.zk', {
+          params: {userId: val, orderByDesc: 'gmtCreate'}
+        }).then(res => {
+          this.item = res.data;
+          console.log(res);
+        });
+      }
+    },
     methods: {
       shwoDetial(data) {
         if(data) {

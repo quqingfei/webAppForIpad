@@ -2,14 +2,44 @@
 	<div class="header">
     <div class="logo"></div>
     <div class="input">
-      <input type="text" placeholder="请输入手机/姓名/昵称"/>
-      <i class="icon"><img src="./fangdaj.png" height="35" width="36"></i>
+      <input type="text" v-model="text" placeholder="请输入手机/姓名/昵称"/>
+      <i class="icon" v-if="btn==1" @click="search"><img src="./fangdaj.png" height="35" width="36"></i>
+      <router-link to="/alllist">
+        <i class="icon" v-if="btn==2" style="background-color:#ffbc3a"  @click="close"><img src="./close.png" height="35" width="36"></i>
+      </router-link>
     </div>
 	</div>
 </template>
 
 <script>
-export default{};
+export default{
+  data() {
+    return {
+      text: '',
+      btn: 1
+    };
+  },
+  methods: {
+    search() {
+       if(this.text === ''){
+        return false;
+      }else{
+        if(/^1[34578]\d{9}$/.test(this.text)) {
+          this.$store.commit(`showOne`, Number(this.text));
+        } else {
+          this.$store.commit(`showOne`, this.text);
+        };
+        // this.$router.push('/onelist');
+        this.$router.replace('/onelist');
+        this.btn = 2;
+      }
+    },
+    close() {
+      console.log(222);
+      this.btn = 1;
+    }
+  }
+};
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
@@ -56,5 +86,5 @@ export default{};
         width 17px
         height 17px
         margin-top 8px
-        margin-left 8px
+        margin-left 8px  
 </style>
