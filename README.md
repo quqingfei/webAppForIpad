@@ -1,6 +1,6 @@
 # webapp for ipad
 
-> a webpack2 and vue2 + vue-router2 + stylus it use vue-cli to webpack build
+> webpack2 and vue2 + vue-router2 + vuex + axios + stylus it use vue-cli to webpack build
 
 ## Build Setup
 
