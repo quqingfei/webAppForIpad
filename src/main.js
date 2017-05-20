@@ -32,14 +32,16 @@ const routes = [
 const store = new Vuex.Store({
   state: {
     oneText: '',
-    userId: ''
+    userData: {
+      type: Object
+    }
   },
   mutations: {
     showOne(state, data) {
       state.oneText = data;
     },
-    setUserId(state, data) {
-      state.userId = data;
+    setUser(state, data) {
+      state.userData = data;
     }
   }
 });

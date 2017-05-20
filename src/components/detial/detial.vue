@@ -47,39 +47,39 @@
         <div class="head">
               <svg id="tablet-loader" width="128" height="128" viewBox="-12.5 -12.5 450 450" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g stroke="red" stroke-width="1" fill="none" fill-rule="evenodd"><path stroke="#efefef" stroke-linecap="round" stroke-dasharray="1327" stroke-dashoffset="0" stroke-width="30" d="M212.2,1.8 C268.528634,1.8 321.511013,23.7365639 361.480176,63.5198238 C401.263436,103.303084 423.2,156.285463 423.2,212.8 C423.2,269.128634 401.263436,322.111013 361.480176,362.080176 C321.696916,401.863436 268.714537,423.8 212.2,423.8 C155.685463,423.8 102.888987,401.863436 62.9198238,362.080176 C23.1365639,322.296916 1.2,269.314537 1.2,212.8 C1.2,156.471366 23.1365639,103.488987 62.9198238,63.5198238 C102.888987,23.7365639 155.871366,1.8 212.2,1.8"></path></g>
-            <g stroke="red" stroke-width="1" fill="none" fill-rule="evenodd"><path id="tablet-circle" data-length="1327" stroke="#49badc" stroke-linecap="round" 
-            stroke-dasharray="1327" stroke-dashoffset="500" stroke-width="30" d="M212.2,1.8 C268.528634,1.8 321.511013,23.7365639 361.480176,63.5198238 C401.263436,103.303084 423.2,156.285463 423.2,212.8 C423.2,269.128634 401.263436,322.111013 361.480176,362.080176 C321.696916,401.863436 268.714537,423.8 212.2,423.8 C155.685463,423.8 102.888987,401.863436 62.9198238,362.080176 C23.1365639,322.296916 1.2,269.314537 1.2,212.8 C1.2,156.471366 23.1365639,103.488987 62.9198238,63.5198238 C102.888987,23.7365639 155.871366,1.8 212.2,1.8"></path></g>
+            <g stroke="red" stroke-width="1" fill="none" fill-rule="evenodd"><path id="tablet-circle" style="transition:all .3s;" data-length="1327" stroke="#49badc" stroke-linecap="round" 
+            stroke-dasharray="1327" stroke-dashoffset="1327" stroke-width="30" d="M212.2,1.8 C268.528634,1.8 321.511013,23.7365639 361.480176,63.5198238 C401.263436,103.303084 423.2,156.285463 423.2,212.8 C423.2,269.128634 401.263436,322.111013 361.480176,362.080176 C321.696916,401.863436 268.714537,423.8 212.2,423.8 C155.685463,423.8 102.888987,401.863436 62.9198238,362.080176 C23.1365639,322.296916 1.2,269.314537 1.2,212.8 C1.2,156.471366 23.1365639,103.488987 62.9198238,63.5198238 C102.888987,23.7365639 155.871366,1.8 212.2,1.8"></path></g>
             </svg>
             <div class="headicon"><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="500" width="500"></div>
         </div>
         <div class="headdetial">
           <div class="source">
-            <span class="text">综合评分：<font class="bule">100分</font></span>
-            <span class="righttext">体质评级：LV.1 <i @click="shwoExplan(explanShow)"></i></span>
+            <span class="text">综合评分：<font class="bule">{{parseInt(item.score)}}分</font></span>
+            <span class="righttext">体质评级：LV.{{item.bodyLevel}} <i @click="shwoExplan(explanShow)"></i></span>
           </div>
           <div class="twod">
-            <span class="text">基本身体成分</span>
+            <span class="text">心肺功能评估</span>
             <span class="ione green">达标</span>
           </div>
           <div class="twod mm7">
-            <span class="text">基本身体成分</span>
-            <span class="ione green">达标</span>
+            <span class="text">运动安全血压</span>
+            <span class="ione yellow">偏高</span>
           </div>
           <div class="twod mm7">
             <span class="last">
               <span class="llas">
                 <span class="text">基本身体成分</span>
-                <span class="ione green">达标</span>
+                <span class="ione blue">偏低</span>
               </span>          
-              <span class="leftd">身体年龄：24</span>
+              <span class="leftd">身体年龄：{{gymBodyExamData.dataItems[13].itemValue}}</span>
             </span>        
           </div>
         </div>    
       </div>
       <div class="bottom">
-        <span class="item"><font>泥巴串串</font><i></i> </span>
-        <span>昵称：Libra串串</span>
-        <span>电话：134****7807</span>
+        <span class="item"><font>{{realName}}</font><i :class="[sex ? 'woman' : 'man']"></i> </span>
+        <span>昵称：{{nickName}}</span>
+        <span>电话：{{phone}}</span>
       </div>
     </div>
     <div class="titlelist">
@@ -253,24 +253,51 @@
         explanShow: false,
         rotere: null,
         dldl: null,
+        realName: '-',
+        nickName: '-',
+        phone: '-',
+        circle: null,
+        gymBodyExamData: {
+          type: Object
+        },
+        source: {
+          type: Number
+        },
+        sex: {
+          type: String
+        },
         item: {
           type: Object
         }
       };
     },
     computed: {
-      userId() {
-        return this.$store.state.userId;
+      userData() {
+        return this.$store.state.userData;
+      },
+      sotk() {
+        let nid = 1327 / 100;
+        let oe = 1327 - (nid * parseInt(this.source));
+        return oe;
       }
     },
+    updated() {
+      this.circle = document.getElementById('tablet-circle');
+    },
     watch: {
-      userId: function(val, oldVal){
-        console.log('new: %s, old: %s', val, oldVal);
+      userData: function(val, oldVal){
+        this.realName = val.realName;
+        this.nickName = val.nickName;
+        this.phone = val.phone;
+        this.sex = val.sex === `F` ? 'true' : 'false';
         this.$ajax.get('/fatburn/ngym/GymBodyExamAction!list.zk!list.zk', {
-          params: {userId: val, orderByDesc: 'gmtCreate'}
+          params: {userId: val.userId, orderByDesc: 'gmtCreate'}
         }).then(res => {
-          this.item = res.data;
-          console.log(res);
+          this.item = res.data.rows[0];
+          this.source = res.data.rows[0].score;
+          this.gymBodyExamData = JSON.parse(res.data.rows[0].gymBodyExamData);
+          console.log(this.gymBodyExamData);
+          this.circle.setAttribute('stroke-dashoffset', this.sotk);
         });
       }
     },
@@ -292,7 +319,6 @@
           this.explanShow = true;
           this.dldl = `shiw`;
         };
-        console.log(this.explanShow);
       }
     },
     components: {
@@ -416,11 +442,15 @@
             display inline-block
             padding 3px 6px
             margin-left 7px
+            color white
+            border-radius 4px
+            text-align center
             &.green
               background-color #3fc371
-              color white
-              border-radius 4px
-              text-align center
+            &.blue
+              background-color #49badc
+            &.yellow
+              background-color #ffbd24
           .last
             display flex
             width 100%
@@ -447,9 +477,13 @@
           display inline-block
           width 12px
           height 12px
-          background url('./woman.png') no-repeat
-          background-size 12px 12px 
           vertical-align: text-top
+          &.woman
+            background url('./woman.png') no-repeat
+            background-size 12px 12px
+          &.man
+            background url('./man.png') no-repeat
+            background-size 12px 12px   
   .titlelist
     margin-left 15px
     height 50px

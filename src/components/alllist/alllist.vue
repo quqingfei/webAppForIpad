@@ -54,7 +54,7 @@ export default {
   methods: {
     emitMyEvent(item, index) {
       Event.$emit('my-event', item.userId);
-      this.$store.commit(`setUserId`, item.userId);
+      this.$store.commit(`setUser`, {userId: item.userId, nickName: item.nickName, realName: item.realName, phone: item.phone, sex: item.sex});
       this.$nextTick(function() {
         this.list.forEach(el => {
           el.active = false;
