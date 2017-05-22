@@ -71,7 +71,7 @@
                 <span class="text">基本身体成分</span>
                 <span class="ione blue">偏低</span>
               </span>          
-              <span class="leftd">身体年龄：{{gymBodyExamData.dataItems[13].itemValue}}</span>
+              <span class="leftd">身体年龄：{{bodyAge}}</span>
             </span>        
           </div>
         </div>    
@@ -86,22 +86,22 @@
       基本身体成分 <span class="green">达标</span>
     </div>
     <div class="bodylist">
-      <v-list :item="item"></v-list> 
+      <v-list v-if="middleList.length" :list="middleList"></v-list>
     </div>
     <div class="titlelist">
       基本身体成分 <span class="blue">偏低</span>
     </div>
     <div class="bodylist bg">
       <div class="heart">
-        <span class="text xinglv">静态心率</span><span class="num">66</span>
+        <span class="text xinglv">静态心率</span><span class="num" v-if="middle.length">{{middle[0].itemValue}}</span>
       </div>
       <div class="font">
         静态心率又称为安静心率，是指在清醒、不活动的安静静态状下，每分钟心跳次数
       </div>
       <div class="chartline">
-        <v-line>
+        <v-line v-if="middle.length" :num="middle[0]">
           <div slot="title">评估建议：</div>
-          <div slot="text">静态心率又称为安静心率，是指在清醒、不活动的安静静态状下，每分钟心跳次数</div>
+          <div slot="text">{{middle[0].itemIntroduction}}</div>
         </v-line>
       </div>
     </div>
@@ -110,27 +110,27 @@
     </div>
     <div class="bodylist bg">
       <div class="heart">
-        <span class="text shousuo">收缩压</span><span class="num">114</span>
+        <span class="text shousuo">收缩压</span><span class="num" v-if="middle.length">{{middle[1].itemValue}}</span>
       </div>
       <div class="font">
         收缩压就是当心脏收缩时，动脉内的压力最高，此时内壁的压力称为收缩压，收缩压≤120mmHg称为理想血压＜90mmHg(12kpa)
       </div>
       <div class="chartline">
-        <v-line></v-line>
+        <v-line v-if="middle.length" :num="middle[1]"></v-line>
       </div>
     </div>
     <div class="bodylist bg">
       <div class="heart">
-        <span class="text shuzhang">舒张压</span><span class="num">70</span>
+        <span class="text shuzhang">舒张压</span><span class="num" v-if="middle.length">{{middle[2].itemValue}}</span>
       </div>
       <div class="font">
         舒张压就是当心脏舒张时，动脉血管弹性回缩时，产生的压力称为舒张压，又叫低压。成人正常的舒张压＜90mmHg(12kpa)
       </div>
       <div class="chartline">
-        <v-line>
+        <v-line v-if="middle.length" :num="middle[2]">
           <div slot="zhanwei"><br><br><br></div>
           <div slot="title">评估建议：</div>
-          <div slot="text">舒张压就是当心脏舒张时，动脉血管弹性回缩时，产生的压力称为舒张压，又叫低压。成人正常的舒张压＜90mmHg(12kpa)</div>
+          <div slot="text"></br>收缩压：{{middle[1].itemIntroduction}}</br></br>舒张压：{{middle[2].itemIntroduction}}</div>
         </v-line>
       </div>
     </div>
@@ -138,52 +138,40 @@
       体重控制
     </div>
     <div class="wcontrcl">
-      <div class="itemw">
-        <div class="value">65.8kg</div>
-        <div class="key">理想体重</div>
+      <div class="itemw" v-for="item in weightControl">
+        <div class="value">{{item.itemValue}}</div>
+        <div class="key">{{item.itemName}}</div>
       </div>
-      <div class="itemw">
-        <div class="value">65.8kg</div>
-        <div class="key">体重控制</div>
-      </div>
-      <div class="itemw">
-        <div class="value">65.8kg</div>
-        <div class="key">脂肪控制</div>
-      </div>
-      <div class="itemw">
-        <div class="value">65.8kg</div>
-        <div class="key">肌肉控制</div>
-      </div>      
     </div>
     <div class="titlelist">
       体重控制
     </div>
     <div class="iid">
-      <div class="square fat1">
+      <div class="square fat1" v-bind:class="{'itemer': choose==0}">
           <div class="content">隐形肥胖型</div>
       </div>
-      <div class="square center fat2">
+      <div class="square center fat2" v-bind:class="{'itemer': choose==1}">
           <div class="content">偏胖型</div>
       </div>
-      <div class="square fat3">
+      <div class="square fat3" v-bind:class="{'itemer': choose==2}">
           <div class="content">肥胖型</div>
       </div>
-      <div class="square fat4">
+      <div class="square fat4" v-bind:class="{'itemer': choose==3}">
           <div class="content">偏瘦肌肉型</div>
       </div>
-      <div class="square center fat5">
+      <div class="square center fat5" v-bind:class="{'itemer': choose==4}">
           <div class="content">标准型</div>
       </div>
-      <div class="square fat6">
+      <div class="square fat6" v-bind:class="{'itemer': choose==5}">
           <div class="content">非常肌肉型</div>
       </div>
-      <div class="square fat7">
+      <div class="square fat7" v-bind:class="{'itemer': choose==6}">
           <div class="content">偏瘦型</div>
       </div>
-      <div class="square center fat8">
+      <div class="square center fat8" v-bind:class="{'itemer': choose==7}">
           <div class="content">标准肌肉型</div>
       </div>
-      <div class="square fat9">
+      <div class="square fat9" v-bind:class="{'itemer': choose==8}">
           <div class="content">运动不足型</div>
       </div>
     </div>
@@ -257,6 +245,11 @@
         nickName: '-',
         phone: '-',
         circle: null,
+        bodyAge: null,
+        choose: 0,
+        middleList: [],
+        middle: [],
+        weightControl: null,
         gymBodyExamData: {
           type: Object
         },
@@ -296,8 +289,41 @@
           this.item = res.data.rows[0];
           this.source = res.data.rows[0].score;
           this.gymBodyExamData = JSON.parse(res.data.rows[0].gymBodyExamData);
-          console.log(this.gymBodyExamData);
+          this.middle = [];
+          this.middleList = [];
+          this.weightControl = null;
           this.circle.setAttribute('stroke-dashoffset', this.sotk);
+          for (let i = 0; i < this.gymBodyExamData.dataItems.length; i++) {
+            let itemValue = this.gymBodyExamData.dataItems[i];
+            switch(itemValue.itemName){
+              case `当前体重(KG)`: this.middleList.push(itemValue); break;
+              case `体格指数(BMI)`: this.middleList.push(itemValue); break;
+              case `脂肪`: this.middleList.push(itemValue); break;
+              case `肌肉`: this.middleList.push(itemValue); break;
+              case `水分`: this.middleList.push(itemValue); break;
+              case `蛋白质`: this.middleList.push(itemValue); break;
+              case `内脏脂肪`: this.middleList.push(itemValue); break;
+              case `骨量`: this.middleList.push(itemValue); break;
+              case `基础代谢`: this.middleList.push(itemValue); break;
+              case `皮下脂肪`: this.middleList.push(itemValue); break;
+              case `静态心率`: this.middle.push(itemValue); break;
+              case `收缩压`: this.middle.push(itemValue); break;
+              case `舒张压`: this.middle.push(itemValue); break;
+              case `身体年龄`: this.bodyAge = itemValue.itemValue; this.middleList.push(itemValue); break;
+            }
+          }
+          switch(this.gymBodyExamData.bodyShape){
+            case 0: this.choose = 0; break;
+            case 1: this.choose = 1; break;
+            case 2: this.choose = 2; break;
+            case 3: this.choose = 3; break;
+            case 4: this.choose = 4; break;
+            case 5: this.choose = 5; break;
+            case 6: this.choose = 6; break;
+            case 7: this.choose = 7; break;
+            case 8: this.choose = 8; break;
+          }
+          this.weightControl = this.gymBodyExamData.controlItems;
         });
       }
     },
@@ -603,6 +629,10 @@
         text-align center
         bottom 6%
         color #999
+      &.itemer
+        background-color #3fc371 !important
+        .content
+          color white
   .chartline
     margin 0 10px
     background-color white

@@ -2,13 +2,13 @@
 <div class="lineall">
   <div class="line">
     <span class="green">
-      <span class="into">100BPM/MIN</span>
+      <span class="into">{{num.stateValues[0]}}BPM/MIN</span>
     </span>
     <span class="yellow">
-      <span class="into">100BPM/MIN</span>
+      <span class="into">{{num.stateValues[1]}}BPM/MIN</span>
     </span>
     <span class="red"></span>
-    <i class="smile"><img src="./person.png" height="22" width="22"></i>
+    <i class="smile" v-bind:style="{'left':left+'px'}"><img src="./person.png" height="22" width="22"></i>
   </div>
   <div class="font">
     <span>标准</span>
@@ -25,6 +25,41 @@
 </div>  
 </template>
 <script>
+  export default {
+    props: {
+      num: null
+    },
+    data() {
+      return {
+        linewidth: 0,
+        first: 0,
+        second: 0,
+        three: 0
+      };
+    },
+    computed: {
+      left() {
+        let value = Number(this.num.itemValue);
+        let leftValue = 0;
+        if(value <= this.num.stateValues[0]){
+          leftValue = value * this.first;
+        }else if(value <= this.num.stateValues[1]){
+          leftValue = (value - this.num.stateValues[0]) * this.second + this.linewidth;
+        }else if(value <= this.num.stateValues[1] + 100){
+          leftValue = (value - this.num.stateValues[1]) * this.three + this.linewidth * 2;
+        }else if(value > this.num.stateValues[1]){
+          leftValue = this.linewidth * 3 - 11;
+        }
+        return leftValue;
+      }
+    },
+    mounted() {
+      this.linewidth = this.$el.getElementsByClassName('line')[0].clientWidth / 3;
+      this.first = this.linewidth / this.num.stateValues[0];
+      this.second = this.linewidth / (this.num.stateValues[1] - this.num.stateValues[0]);
+      this.three = this.linewidth / (this.num.stateValues[1] + 100);
+    }
+  };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
@@ -35,7 +70,8 @@
     position relative
     .smile
       position absolute
-      left 66%
+      transition all 0.3s
+      left 0%
       top -8px
     span
       position relative
