@@ -1,13 +1,11 @@
 <template>
 <div class="itemlist">
 	<ul>
-		<li class="itemd" v-for="data in listitem">
+		<li class="itemd" v-for="data in listitem" @click="localHref(data)">
       <span class="ime" :class="data.class">{{data.itemName}}</span>
       <span class="cen">{{data.itemValue}}</span>  
       <span>
       <i class="rig green" :class="data.value[0]">{{data.value[1]}}</i>
-    <!--   <i class="rig blue">偏低</i>
-      <i class="rig yellow">偏高</i> -->
       </span>
     </li>
 	</ul>
@@ -23,12 +21,23 @@
       listitem() {
         let newlist = [];
         for(let i = 0; i < this.list.length; i++){
-          newlist.push({itemName: this.list[i].itemName, itemValue: this.list[i].itemValue, value: this.domain(this.list[i].stateString), class: this.classlist(this.list[i].itemName)});
+          newlist.push({
+            itemName: this.list[i].itemName,
+            itemValue: this.list[i].itemValue,
+            value: this.domain(this.list[i].stateString),
+            class: this.classlist(this.list[i].itemName)[0],
+            id: this.list[i].id,
+            userId: this.list[i].userId,
+            val: this.classlist(this.list[i].itemName)[1]
+          });
         }
         return newlist;
       }
     },
     methods: {
+      localHref(data) {
+        window.location.href = `/fatburn/bodyExam/bodydetial.html?id=${data.id}&userId=${data.userId}&val=${data.val}`;
+      },
       domain(val) {
         let ri = '';
         let res = '';
@@ -48,20 +57,21 @@
       },
       classlist(val) {
         let ib = '';
+        let is = '';
         switch(val){
-          case '当前体重(KG)': ib = 'wicon'; break;
-          case '体格指数(BMI)': ib = 'bicon'; break;
-          case '脂肪': ib = 'cicon'; break;
-          case '肌肉': ib = 'dicon'; break;
-          case '水分': ib = 'eicon'; break;
-          case '蛋白质': ib = 'ficon'; break;
-          case '内脏脂肪': ib = 'gicon'; break;
-          case '皮下脂肪': ib = 'hicon'; break;
-          case '骨量':ib = 'iicon'; break;
-          case '基础代谢': ib = 'jicon'; break;
-          case '身体年龄': ib = 'oicon'; break;
+          case '当前体重(KG)': ib = 'wicon'; is = 'uerBody'; break;
+          case '体格指数(BMI)': ib = 'bicon'; is = 'usrBmiF'; break;
+          case '脂肪': ib = 'cicon'; is = 'usrFatlv'; break;
+          case '肌肉': ib = 'dicon'; is = 'muscle'; break;
+          case '水分': ib = 'eicon'; is = 'bodyWater'; break;
+          case '蛋白质': ib = 'ficon'; is = 'protein'; break;
+          case '内脏脂肪': ib = 'gicon'; is = 'infat'; break;
+          case '皮下脂肪': ib = 'hicon'; is = 'skin'; break;
+          case '骨量':ib = 'iicon'; is = 'boneAge'; break;
+          case '基础代谢': ib = 'jicon'; is = 'usrBike'; break;
+          case '身体年龄': ib = 'oicon'; is = 'bodyAge'; break;
         }
-        return ib;
+        return [ib, is];
       }
     }
   };

@@ -26,17 +26,11 @@
   <div class="title">
     <span class="text">体测时间：</span>
     <span class="icondate">
-        <span @click="shwoDetial(detailShow)">2017-05-03 10:30:07</span>
+        <span @click="shwoDetial(detailShow)">{{currentExamTime | times}}</span>
         <i :class="rotere" @click="shwoDetial(detailShow)"></i>
         <transition name="fade">
           <ul v-show="detailShow">
-            <li><span>2017-05-03 10:30:07</span></li>
-            <li><span>2017-05-03 10:30:07</span></li>
-            <li><span>2017-05-03 10:30:07</span></li>
-            <li><span>2017-05-03 10:30:07</span></li>
-            <li><span>2017-05-03 10:30:07</span></li>
-            <li><span>2017-05-03 10:30:07</span></li>
-            <li><span>2017-05-03 10:30:07</span></li>
+            <li v-for="(item, $index) in images" @click="examTest(item, $index)"><span>{{item.examTime | times}}</span></li>
           </ul>
         </transition>
     </span>
@@ -181,20 +175,20 @@
     <div class="chartline">
       <div class="linetitle">
           <div class="lineitem">
-            <div class="item item0">体重</div>
+            <div class="item item0" @click="linechart(lined, linew, '体重', '#ffbc3a', 'rgb(243,179,55)')">体重</div>
           </div>
           <div class="lineitem">
-            <div class="item item1">心率</div>
+            <div class="item item1" @click="linechart(lined, lineh, '心率', '#17e277', 'rgb(22,210,111)')">心率</div>
           </div>
           <div class="lineitem">
-            <div class="item item2">血压</div>
+            <div class="item item2" @click="linechartblood(lined, linef, lines)">血压</div>
           </div>
           <div class="lineitem">
-            <div class="item item3">肌肉占比</div>
+            <div class="item item3" @click="linechart(lined, linem, '肌肉占比', '#e23d17', 'rgb(226,61,23)')">肌肉占比</div>
           </div>
       </div>
       <div class="chart">
-        line-chart
+        <div id="main" style="width: 100%;height:98%;padding:0;float:left;"></div>
       </div> 
     </div>
     <div class="titlelist">
@@ -206,41 +200,38 @@
           <table>
             <tbody>
               <tr>
-                <td onclick="indes($(this))"><i class="">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
-                <td onclick="indes($(this))"><i class="cilic">11/8</i><img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg" height="74" width="74"></td>
+                <td v-for="(item, $index) in images" @click="emitMyEvent(item, $index)"><i :class="{'active':item.active,'unactive':!item.active}">{{item.examTime | timesMMdd}}</i><img :src="urlbefore+item.img+'&style=74h_74w_0e'" height="74" width="74"></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="bighead">
-        <img src="http://zkfilecenter.img-cn-hangzhou.aliyuncs.com/zkFiles/2016128/2016128-103545872.jpg@_1wh.jpg">
+        <img :src="lastImgae">
       </div>
     </div>
   </div>
-  
+  <transition name="fade">
+  <div class="notest" v-show="showBox">未进行过体测！</div>
+  </transition>
 </div>
 </template>
 
 <script>
   import vList from '@/components/list/list';
   import vLine from '@/components/line/line';
+  import echarts from 'echarts';
   export default {
     data() {
       return {
+        showBox: false,
+        urlbefore: '/fatburn/file/FileCenter!showImage2.zk?name=',
+        lastImgae: '',
         detailShow: false,
         explanShow: false,
         rotere: null,
         dldl: null,
+        main: null,
         realName: '-',
         nickName: '-',
         phone: '-',
@@ -249,7 +240,9 @@
         choose: 0,
         middleList: [],
         middle: [],
+        images: [],
         weightControl: null,
+        currentExamTime: '',
         gymBodyExamData: {
           type: Object
         },
@@ -261,7 +254,14 @@
         },
         item: {
           type: Object
-        }
+        },
+        allData: null,
+        lined: [],
+        linew: [],
+        lineh: [],
+        linef: [],
+        lines: [],
+        linem: []
       };
     },
     computed: {
@@ -286,48 +286,61 @@
         this.$ajax.get('/fatburn/ngym/GymBodyExamAction!list.zk!list.zk', {
           params: {userId: val.userId, orderByDesc: 'gmtCreate'}
         }).then(res => {
-          this.item = res.data.rows[0];
-          this.source = res.data.rows[0].score;
-          this.gymBodyExamData = JSON.parse(res.data.rows[0].gymBodyExamData);
+          this.allData = res.data.rows;
+          if(this.allData.length <= 0){
+            this.showBox = true;
+            return false;
+          }
+          this.showBox = false;
+          this.item = this.allData[val.index];
+          this.source = res.data.rows[val.index].score;
+          this.gymBodyExamData = JSON.parse(res.data.rows[val.index].gymBodyExamData);
           this.middle = [];
           this.middleList = [];
           this.weightControl = null;
+          this.lined = [];
+          this.linew = [];
           this.circle.setAttribute('stroke-dashoffset', this.sotk);
           for (let i = 0; i < this.gymBodyExamData.dataItems.length; i++) {
+            this.gymBodyExamData.dataItems[i].id = this.item.id;
+            this.gymBodyExamData.dataItems[i].userId = this.item.userId;
             let itemValue = this.gymBodyExamData.dataItems[i];
-            switch(itemValue.itemName){
-              case `当前体重(KG)`: this.middleList.push(itemValue); break;
-              case `体格指数(BMI)`: this.middleList.push(itemValue); break;
-              case `脂肪`: this.middleList.push(itemValue); break;
-              case `肌肉`: this.middleList.push(itemValue); break;
-              case `水分`: this.middleList.push(itemValue); break;
-              case `蛋白质`: this.middleList.push(itemValue); break;
-              case `内脏脂肪`: this.middleList.push(itemValue); break;
-              case `骨量`: this.middleList.push(itemValue); break;
-              case `基础代谢`: this.middleList.push(itemValue); break;
-              case `皮下脂肪`: this.middleList.push(itemValue); break;
-              case `静态心率`: this.middle.push(itemValue); break;
-              case `收缩压`: this.middle.push(itemValue); break;
-              case `舒张压`: this.middle.push(itemValue); break;
-              case `身体年龄`: this.bodyAge = itemValue.itemValue; this.middleList.push(itemValue); break;
+            this.bodyLists(itemValue);
+          }
+          this.bodyX(this.gymBodyExamData.bodyShape);
+          this.images = [];
+          for(let n = 0; n < res.data.rows.length; n++){
+            let is = false;
+            if(n === 0){
+              is = true;
             }
+            this.lined.push(this.formatTimeMonth(res.data.rows[n].examTime));
+            this.linew.push(res.data.rows[n].weight === '' ? 0 : parseFloat(res.data.rows[n].weight).toFixed(1));
+            this.lineh.push(res.data.rows[n].restingHeartRate === '' ? 0 : res.data.rows[n].restingHeartRate);
+            this.linef.push(res.data.rows[n].maxBloodPressure ? res.data.rows[n].maxBloodPressure : 0);
+            this.lines.push(res.data.rows[n].minBloodPressure ? res.data.rows[n].minBloodPressure : 0);
+            this.linem.push(res.data.rows[n].muscle === '' ? 0 : parseFloat(res.data.rows[n].muscle).toFixed(1));
+            this.images.push({ 'active': is, img: res.data.rows[n].image, examTime: res.data.rows[n].examTime });
           }
-          switch(this.gymBodyExamData.bodyShape){
-            case 0: this.choose = 0; break;
-            case 1: this.choose = 1; break;
-            case 2: this.choose = 2; break;
-            case 3: this.choose = 3; break;
-            case 4: this.choose = 4; break;
-            case 5: this.choose = 5; break;
-            case 6: this.choose = 6; break;
-            case 7: this.choose = 7; break;
-            case 8: this.choose = 8; break;
-          }
+          this.lined = this.lined.reverse();
+          this.linew = this.linew.reverse();
+          this.lineh = this.lineh.reverse();
+          this.linef = this.linef.reverse();
+          this.lines = this.lines.reverse();
+          this.linem = this.linem.reverse();
+          this.linechart(this.lined, this.linew, '体重', '#ffbc3a', 'rgb(243,179,55)');
+          this.lastImgae = `/fatburn/file/FileCenter!showImage2.zk?name=${res.data.rows[0].image}&style=450w_0e`;
           this.weightControl = this.gymBodyExamData.controlItems;
+          this.currentExamTime = res.data.rows[0].examTime;
         });
       }
     },
     methods: {
+      formatTimeMonth(value) {
+          let date = new Date((value));
+          let result = (date.getMonth() + 1) + '.' + date.getDate();
+          return result;
+      },
       shwoDetial(data) {
         if(data) {
           this.detailShow = false;
@@ -345,7 +358,287 @@
           this.explanShow = true;
           this.dldl = `shiw`;
         };
-      }
+      },
+      emitMyEvent(item, index) {
+        for(let i = 0; i < this.images.length; i++){
+          this.images[i].active = false;
+        }
+        this.$set(item, 'active', true);
+        this.lastImgae = `/fatburn/file/FileCenter!showImage2.zk?name=${this.images[index].img}&style=450w_0e`;
+      },
+      examTest(item, index) {
+        this.detailShow = false;
+        this.rotere = null;
+        this.currentExamTime = item.examTime;
+        this.item = this.allData[index];
+        this.source = this.allData[index].score;
+        this.gymBodyExamData = JSON.parse(this.allData[index].gymBodyExamData);
+        this.middle = [];
+        this.middleList = [];
+        this.weightControl = null;
+        this.circle.setAttribute('stroke-dashoffset', this.sotk);
+        for (let i = 0; i < this.gymBodyExamData.dataItems.length; i++) {
+          let itemValue = this.gymBodyExamData.dataItems[i];
+          this.bodyLists(itemValue);
+        }
+        this.bodyX(this.gymBodyExamData.bodyShape);
+        this.weightControl = this.gymBodyExamData.controlItems;
+      },
+      bodyX(val) {
+        switch(val){
+          case 0: this.choose = 0; break;
+          case 1: this.choose = 1; break;
+          case 2: this.choose = 2; break;
+          case 3: this.choose = 3; break;
+          case 4: this.choose = 4; break;
+          case 5: this.choose = 5; break;
+          case 6: this.choose = 6; break;
+          case 7: this.choose = 7; break;
+          case 8: this.choose = 8; break;
+        }
+      },
+      bodyLists(itemValue) {
+        switch(itemValue.itemName){
+          case `当前体重(KG)`: this.middleList.push(itemValue); break;
+          case `体格指数(BMI)`: this.middleList.push(itemValue); break;
+          case `脂肪`: this.middleList.push(itemValue); break;
+          case `肌肉`: this.middleList.push(itemValue); break;
+          case `水分`: this.middleList.push(itemValue); break;
+          case `蛋白质`: this.middleList.push(itemValue); break;
+          case `内脏脂肪`: this.middleList.push(itemValue); break;
+          case `骨量`: this.middleList.push(itemValue); break;
+          case `基础代谢`: this.middleList.push(itemValue); break;
+          case `皮下脂肪`: this.middleList.push(itemValue); break;
+          case `静态心率`: this.middle.push(itemValue); break;
+          case `收缩压`: this.middle.push(itemValue); break;
+          case `舒张压`: this.middle.push(itemValue); break;
+          case `身体年龄`: this.bodyAge = itemValue.itemValue; this.middleList.push(itemValue); break;
+        }
+      },
+      linechart(time, speed, name, color, color1){
+        let wChart = echarts.init(document.getElementById('main'));
+        let aliveOption = {
+          title: {
+            text: '',
+            textStyle: {
+              fontSize: '12'
+            }
+          },
+          tooltip: {
+            // formatter: function(params) {
+            //   return $('#monthSel').val() + '月' + 'params[0].name' + '日<br/>' + 'params[0].seriesName' + ' : ' + 'params[0].value';
+            // },
+            trigger: 'axis',
+              axisPointer: {
+                type: 'none'
+              }
+          },
+          grid: {
+            left: '0%',
+            right: '5%',
+            bottom: '2%',
+            top: '6%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            show: true,
+            boundaryGap: false,
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: '#273341'
+              }
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#666',
+                align: 'center'
+              }
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#fff'
+              }
+            },
+            data: time
+          },
+          yAxis: {
+            type: 'value',
+            show: false,
+            boundaryGap: false,
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: '#68717a'
+              }
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: 'red'
+              }
+            },
+            splitArea: {
+              areaStyle: {
+                color: 'red'
+              }
+            }
+          },
+          series: [{
+            name: name,
+            type: 'line',
+            smooth: true,
+            symbolSize: '4',
+            stack: '总数',
+            data: speed,
+            itemStyle: {
+              normal: {
+                label: { show: true }
+              }
+            },
+            areaStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: color1
+                }, {
+                  offset: 1,
+                  color: 'rgb(255, 255, 255)'
+                }])
+              }
+            }
+          }],
+          color: [color]
+          };
+        wChart.setOption(aliveOption);
+      },
+      linechartblood(time, speed1, speed2) {
+        let wChart = echarts.init(document.getElementById('main'));
+            let aliveOption = {
+                title: {
+                    text: '',
+                    textStyle: {
+                        fontSize: '12'
+                    }
+                },
+                tooltip: {
+        //            formatter: function(params) {
+        //                return $('#monthSel').val() + '月' + 'params[0].name' + '日<br/>' + 'params[0].seriesName' + ' : ' + 'params[0].value';
+        //            },
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'none'
+                    }
+                },
+                grid: {
+                    left: '0%',
+                    right: '5%',
+                    bottom: '2%',
+                    top: '6%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    show: true,
+                    boundaryGap: false,
+                    splitLine: {
+                        show: false,
+                        lineStyle: {
+                            color: '#273341'
+                        }
+                    },
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                                color: '#666',
+                                align: 'center'
+                            }
+                    },
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#fff'
+                        }
+                    },
+                    data: time
+                },
+                yAxis: {
+                    type: 'value',
+                    show: false,
+                    boundaryGap: false,
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#68717a'
+                        }
+                    },
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: 'red'
+                        }
+                    },
+                    splitArea: {
+                        areaStyle: {
+                            color: 'red'
+                        }
+                    }
+                },
+                series: [{
+                    name: '舒张压',
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: '4',
+                    stack: '总数',
+                    data: speed2,
+                    itemStyle: {
+                      normal: {
+                        label: { show: true }
+                      }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgb(243,179,55)'
+                            }, {
+                                offset: 1,
+                                color: 'rgb(255, 255, 255)'
+                            }])
+                        }
+                    }
+                },
+                {
+                    name: '收缩压',
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: '4',
+                    stack: '总数',
+                    data: speed1,
+                    itemStyle: {
+                      normal: {
+                        label: { show: true }
+                      }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgb(23,222,225)'
+                            }, {
+                                offset: 1,
+                                color: 'rgb(255, 255, 255)'
+                            }])
+                        }
+                    }
+                }],
+                color: ['#ffbc3a', '#17dee1']
+            };
+            wChart.setOption(aliveOption);
+    }
     },
     components: {
       vList,
@@ -404,8 +697,8 @@
       li
         border-bottom 1px solid #ddd
 .rightitem
-  height: 81vh;
-  overflow: auto;
+  height calc(100vh - 64px - 30px - 14px - 46px)
+  overflow auto;
   .detial-right
     padding-top 34px
     border-bottom 1px solid #ccc
@@ -668,10 +961,6 @@
             background-color #e23d17
     .chart
       height 270px
-      text-align center
-      line-height 270px
-      color #666
-      font-size 40px
   .picturebox 
     margin 0 10px
     background-color white
@@ -696,7 +985,7 @@
             top 0px
             font-style normal
             transition all 0.2s
-            &.cilic
+            &.active
               line-height 24px
               top 50px
           img
@@ -717,7 +1006,7 @@
   height 100%
   overflow auto
   display none
-  background-color rgba(7,17,27,0.8)
+  background-color rgba(7,17,27,0.9)
   .detail-wrapper
     min-height 100%
     .detail-main
@@ -772,5 +1061,24 @@
       clear both
       visibility hidden 
 .shiw
-  display block    
+  display block
+.notest
+  position absolute
+  left 0px
+  top 0px
+  bottom 0px
+  background-color #efefef
+  height calc(100vh - 64px - 30px - 14px - 46px)
+  width 100%
+  z-index 100px
+  color #999
+  text-align center
+  line-height 100px
+  transition all 0.2s
+  &.fade-leave, &.fade-enter-active
+    opacity 1
+    top 0px
+  &.fade-enter, &.fade-leave-active
+    top -5px
+    opacity 0
 </style>

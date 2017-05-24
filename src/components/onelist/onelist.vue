@@ -38,6 +38,7 @@
       realName: '-',
       nickName: '-',
       phone: '-',
+      sex: 'M',
       headIcon: null,
       bodyExamCount: 0
     };
@@ -81,6 +82,7 @@
           this.realName = self.realName;
           this.nickName = self.nickName;
           this.phone = self.phone;
+          this.sex = self.sex;
           this.headIcon = self.headIcon ? self.headIcon : this.head;
           this.$ajax.get('/fatburn/ngym/GymBodyExamAction!list.zk!list.zk', {
             params: {userId: response.data.rows[0].userId, orderByDesc: 'gmtCreate'}
@@ -108,6 +110,7 @@
       });
     },
     emitMyEvent(item, index) {
+      this.$store.commit(`setUser`, {userId: item.userId, nickName: this.nickName, realName: this.realName, phone: this.phone, sex: this.sex, index: index});
       this.$nextTick(function() {
         this.lists.forEach(el => {
           el.active = false;

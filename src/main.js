@@ -62,8 +62,25 @@ Vue.filter('times', function(time) {
   let hour = date.getHours();
   let minute = date.getMinutes();
   let second = date.getSeconds();
+  month = month >= 10 ? month : '0' + month;
+  day = day >= 10 ? day : '0' + day;
+  hour = hour >= 10 ? hour : '0' + hour;
+  minute = minute >= 10 ? minute : '0' + minute;
+  second = second >= 10 ? second : '0' + second;
   return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 });
+Vue.filter('timesMMdd', function(time) {
+  if(typeof (time) === 'undefined'){
+    return ``;
+  };
+  let date = new Date(time);
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  month = month >= 10 ? month : '0' + month;
+  day = day >= 10 ? day : '0' + day;
+  return `${month}/${day}`;
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
