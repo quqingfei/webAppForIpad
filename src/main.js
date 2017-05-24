@@ -9,7 +9,6 @@ import App from './App';
 import alllist from '@/components/alllist/alllist';
 import detial from 'components/detial/detial';
 import onelist from 'components/onelist/onelist';
-import 'common/stylus/index.styl';
 
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;
